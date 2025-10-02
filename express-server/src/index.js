@@ -29,7 +29,12 @@ app.use((req, res) => {
     res.status(404).json({ error: 'Not found', path: req.path });
 });
 
-app.listen(PORT, '0.0.0.0', () => {
-    console.log(`Express server is running on http://localhost:${PORT}`);
-    console.log(`Environment: ${process.env.NODE_ENV || 'development'}`);
-});
+// Export app for testing; only listen if run directly
+if (require.main === module) {
+    app.listen(PORT, '0.0.0.0', () => {
+        console.log(`Express server is running on http://localhost:${PORT}`);
+        console.log(`Environment: ${process.env.NODE_ENV || 'development'}`);
+    });
+}
+
+module.exports = { app };
